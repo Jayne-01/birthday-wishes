@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎂 Birthday Wishes for My Friend</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(ellipse at 30% 20%, #6a2c8c 0%, #3b1e5e 55%, #1f0d33 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        body::before, body::after {
+            content: "";
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.35;
+            pointer-events: none;
+            z-index: 0;
+        }
+        body::before {
+            width: 400px; height: 400px;
+            background: #b57edc;
+            top: -100px; left: -100px;
+        }
+        body::after {
+            width: 500px; height: 500px;
+            background: #7b2fbe;
+            bottom: -150px; right: -120px;
+        }
+
+        .birthday-card {
+            position: relative;
+            z-index: 1;
+            max-width: 1250px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(12px);
+            border-radius: 60px 60px 45px 45px;
+            padding: 35px 30px 45px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 215, 255, 0.25);
+        }
+
+        .cake-photo-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 40px 30px;
+            margin-bottom: 35px;
+        }
+
+        .cake-section {
+            flex: 1 1 340px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 90px;
+        }
+
+        .cake-wrapper {
+            position: relative;
+            filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.45));
+        }
+
+        .cake {
+            position: relative;
+            width: 320px;
+            height: 400px;
+        }
+
+        .tier {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 22px;
+            box-shadow: inset 0 -12px 18px rgba(0, 0, 0, 0.15),
+                        inset 0 8px 12px rgba(255, 255, 255, 0.5),
+                        0 8px 14px rgba(0, 0, 0, 0.25);
+            border: 2px solid rgba(220, 160, 120, 0.7);
+        }
+
+        .tier::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: 4%;
+            width: 92%;
+            height: 26px;
+            background: radial-gradient(ellipse at 50% 30%, #fffaf2, #ffe9d4 70%, #f7d6b8);
+            border-radius: 50%;
+            box-shadow: inset 0 4px 6px rgba(255, 255, 255, 0.9), 0 3px 5px rgba(0, 0, 0, 0.12);
+        }
+
+        .tier::after {
+            content: "";
+            position: absolute;
+            top: 4px;
+            left: 0;
+            width: 100%;
+            height: 22px;
+            background: radial-gradient(circle at 8px 0, #ffe9d4 0 11px, transparent 12px) 0 0/34px 22px repeat-x,
+                        radial-gradient(circle at 8px 0, #ffe9d4 0 9px, transparent 10px) 17px 0/34px 22px repeat-x;
+            pointer-events: none;
+        }
+
+        .tier-1 {
+            bottom: 0;
+            width: 310px;
+            height: 92px;
+            background: linear-gradient(145deg, #f9b98a, #e98d5b 60%, #d17648);
+            z-index: 3;
+        }
+
+        .tier-2 {
+            bottom: 88px;
+            width: 240px;
+            height: 82px;
+            background: linear-gradient(145deg, #fbe3c8, #f4c79b 60%, #e2a876);
+            z-index: 4;
+        }
+
+        .tier-3 {
+            bottom: 166px;
+            width: 180px;
+            height: 72px;
+            background: linear-gradient(145deg, #d8a0e8, #b874d4 60%, #9a54bd);
+            border-color: rgba(150, 90, 190, 0.7);
+            z-index: 5;
+        }
+        .tier-3::before {
+            background: radial-gradient(ellipse at 50% 30%, #fbeaff, #eecdf9 70%, #d9aef0);
+        }
+        .tier-3::after {
+            background: radial-gradient(circle at 8px 0, #eecdf9 0 11px, transparent 12px) 0 0/34px 22px repeat-x,
+                        radial-gradient(circle at 8px 0, #eecdf9 0 9px, transparent 10px) 17px 0/34px 22px repeat-x;
+        }
+
+        .sprinkle {
+            position: absolute;
+            width: 8px;
+            height: 4px;
+            border-radius: 3px;
+            z-index: 6;
+            opacity: 0.9;
+        }
+        .s1 { background: #ff5c8a; top: 20%; left: 18%; transform: rotate(30deg); }
+        .s2 { background: #ffd166; top: 45%; left: 70%; transform: rotate(-20deg); }
+        .s3 { background: #6ee7b7; top: 30%; left: 45%; transform: rotate(60deg); }
+        .s4 { background: #a78bfa; top: 60%; left: 25%; transform: rotate(-45deg); }
+        .s5 { background: #fb7185; top: 55%; left: 62%; transform: rotate(15deg); }
+        .s6 { background: #38bdf8; top: 18%; left: 60%; transform: rotate(80deg); }
+        .s7 { background: #fde047; top: 40%; left: 33%; transform: rotate(-10deg); }
+        .s8 { background: #f472b6; top: 65%; left: 78%; transform: rotate(45deg); }
+        .s9 { background: #34d399; top: 22%; left: 80%; transform: rotate(-60deg); }
+        .s10 { background: #c084fc; top: 50%; left: 12%; transform: rotate(25deg); }
+
+        /* ===== 3 THIN CANDLES — centered on the top tier ===== */
+        .candle-row {
+            position: absolute;
+            bottom: 218px;              /* sits on top of tier-3 surface */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 130px;
+            z-index: 20;
+            display: flex;
+            justify-content: center;    /* centered horizontally */
+            align-items: flex-end;
+            gap: 22px;                  /* even spacing between candles */
+        }
+
+        .candle-holder {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .candle-holder:hover {
+            transform: scale(1.06);
+        }
+        .candle-holder:active {
+            transform: scale(0.94);
+        }
+
+        .candle-glow {
+            position: absolute;
+            top: -65px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 200, 90, 0.55) 0%, rgba(255, 160, 40, 0.25) 35%, rgba(255, 140, 0, 0.08) 60%, transparent 75%);
+            filter: blur(6px);
+            pointer-events: none;
+            z-index: 19;
+            transition: opacity 0.5s ease;
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+        @keyframes glowPulse {
+            0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.85; }
+            50% { transform: translateX(-50%) scale(1.12); opacity: 1; }
+        }
+
+        .candle-body {
+            position: relative;
+            width: 12px;
+            height: 68px;
+            background: linear-gradient(90deg,
+                #e8c9a0 0%,
+                #fff6e6 20%,
+                #fffaf0 50%,
+                #f7e6cc 75%,
+                #d9b98e 100%);
+            border-radius: 6px 6px 3px 3px;
+            box-shadow: inset -2px 0 4px rgba(160, 120, 70, 0.35),
+                        inset 2px 0 4px rgba(255, 255, 255, 0.7),
+                        0 4px 8px rgba(0, 0, 0, 0.25);
+            z-index: 21;
+        }
+        .candle-body::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 18px;
+            background:
+                radial-gradient(circle at 3px 0, #fffaf0 0 4px, transparent 5px) 0 0/12px 16px repeat-x;
+            opacity: 0.9;
+        }
+
+        .wick {
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 10px;
+            background: linear-gradient(#2b2b2b, #4a4a4a);
+            border-radius: 2px;
+            z-index: 22;
+        }
+
+        .flame {
+            position: absolute;
+            top: -36px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 18px;
+            height: 32px;
+            background:
+                radial-gradient(ellipse at 50% 85%, #fffbe6 0%, #ffe066 30%, #ff9d1c 60%, #ff5e00 85%, #c92a00 100%);
+            border-radius: 50% 50% 45% 45% / 62% 62% 38% 38%;
+            box-shadow:
+                0 0 16px 5px rgba(255, 180, 60, 0.75),
+                0 0 40px 14px rgba(255, 130, 20, 0.45);
+            transform-origin: 50% 100%;
+            animation: flameFlicker 0.18s infinite alternate ease-in-out;
+            z-index: 23;
+            transition: opacity 0.35s ease;
+        }
+        .flame::before {
+            content: "";
+            position: absolute;
+            bottom: 3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 7px;
+            height: 16px;
+            background: radial-gradient(ellipse at 50% 80%, #ffffff 0%, #fff6b0 50%, rgba(255, 220, 100, 0.4) 100%);
+            border-radius: 50%;
+            filter: blur(1px);
+        }
+        .flame::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 7px;
+            background: radial-gradient(ellipse, rgba(120, 180, 255, 0.85), rgba(80, 140, 255, 0.4) 60%, transparent 80%);
+            border-radius: 50%;
+            filter: blur(1.5px);
+        }
+
+        @keyframes flameFlicker {
+            0%   { transform: translateX(-50%) scale(1) rotate(-1.5deg); }
+            50%  { transform: translateX(-50%) scale(1.06, 1.1) rotate(1.5deg); }
+            100% { transform: translateX(-50%) scale(0.97, 1.04) rotate(-0.5deg); }
+        }
+
+        .flame.out {
+            opacity: 0;
+            animation: none;
+            box-shadow: none;
+        }
+        .candle-glow.out {
+            opacity: 0;
+            animation: none;
+        }
+
+        .smoke {
+            position: absolute;
+            top: -36px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(220, 220, 220, 0.6);
+            opacity: 0;
+            z-index: 22;
+            pointer-events: none;
+        }
+        .smoke.puff {
+            animation: smokeRise 1.4s ease-out forwards;
+        }
+        @keyframes smokeRise {
+            0%   { opacity: 0.8; transform: translateX(-50%) translateY(0) scale(1); }
+            50%  { opacity: 0.4; transform: translateX(-70%) translateY(-30px) scale(2.2); }
+            100% { opacity: 0; transform: translateX(-30%) translateY(-60px) scale(3.4); }
+        }
+
+        /* ===== CURVED 3-PHOTO LAYOUT (1 top, 2 below) ===== */
+        .photo-section {
+            flex: 1 1 520px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 22px;
+            padding: 10px 0;
+        }
+        .photo-top {
+            display: flex;
+            justify-content: center;
+        }
+        .photo-bottom {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+        }
+        .photo-frame {
+            background: #f2e6ff;
+            box-shadow: 0 18px 30px rgba(0, 0, 0, 0.5),
+                        0 0 0 5px #bc9bd9,
+                        0 0 0 10px #9b6bb0,
+                        0 0 28px 6px rgba(200, 140, 255, 0.35);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+        .photo-frame:hover {
+            transform: scale(1.05) rotate(1deg);
+        }
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo-frame.top-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50% 50% 28px 28px / 40% 40% 28px 28px;
+        }
+        .photo-frame.top-photo img {
+            border-radius: 50% 50% 22px 22px / 40% 40% 22px 22px;
+        }
+
+        .photo-frame.side-photo {
+            width: 160px;
+            height: 160px;
+            border-radius: 30px;
+        }
+        .photo-frame.side-photo img {
+            border-radius: 24px;
+        }
+        .photo-frame.side-photo.left-photo {
+            border-radius: 28px 40px 28px 28px / 28px 45% 28px 28px;
+        }
+        .photo-frame.side-photo.left-photo img {
+            border-radius: 22px 34px 22px 22px / 22px 40% 22px 22px;
+        }
+        .photo-frame.side-photo.right-photo {
+            border-radius: 40px 28px 28px 28px / 45% 28px 28px 28px;
+        }
+        .photo-frame.side-photo.right-photo img {
+            border-radius: 34px 22px 22px 22px / 40% 22px 22px 22px;
+        }
+
+        /* ===== MESSAGE PANEL ===== */
+        .message-panel {
+            background: rgba(255, 240, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 18px 24px;
+            margin: 12px 0 22px;
+            border: 2px solid #e2bbff;
+            box-shadow: inset 0 0 25px rgba(255, 255, 255, 0.15), 0 10px 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        .message-display {
+            font-family: 'Caveat', cursive;
+            font-size: 1.45rem;
+            font-weight: 400;
+            color: #fff7e6;
+            text-shadow: 2px 2px 0 #3e1d5e, 0 0 18px #e6b3ff;
+            letter-spacing: 0.5px;
+            word-break: break-word;
+            min-height: 4.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 0;
+            line-height: 1.35;
+        }
+        .message-display .caret {
+            display: inline-block;
+            width: 2px;
+            height: 1.1em;
+            background: #fff7e6;
+            margin-left: 3px;
+            vertical-align: middle;
+            animation: blink 0.8s step-end infinite;
+            box-shadow: 0 0 8px #e6b3ff;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .hint {
+            text-align: center;
+            color: #e9cfff;
+            font-size: 0.92rem;
+            margin-top: 8px;
+            opacity: 0.85;
+            letter-spacing: 0.5px;
+            animation: hintPulse 2.4s ease-in-out infinite;
+        }
+        @keyframes hintPulse {
+            0%, 100% { opacity: 0.65; }
+            50% { opacity: 1; }
+        }
+
+        @media (max-width: 900px) {
+            .photo-section { flex: 1 1 100%; }
+        }
+
+        @media (max-width: 760px) {
+            .birthday-card { padding: 25px 16px 35px; border-radius: 45px; }
+            .cake-section { padding-top: 70px; }
+            .cake { width: 270px; height: 350px; }
+            .tier-1 { width: 260px; height: 80px; }
+            .tier-2 { width: 200px; height: 72px; bottom: 76px; }
+            .tier-3 { width: 150px; height: 62px; bottom: 144px; }
+            .candle-row { bottom: 192px; width: 110px; gap: 18px; }
+            .candle-body { height: 58px; width: 11px; }
+            .flame { width: 16px; height: 28px; top: -32px; }
+            .candle-glow { width: 95px; height: 95px; top: -56px; }
+            .message-display { font-size: 1.2rem; }
+            .photo-frame.top-photo { width: 170px; height: 170px; }
+            .photo-frame.side-photo { width: 135px; height: 135px; }
+            .photo-bottom { gap: 20px; }
+        }
+
+        @media (max-width: 560px) {
+            .cake-photo-row { flex-direction: column; }
+            .message-display { font-size: 1.05rem; }
+            .cake-section { padding-top: 60px; }
+            .cake { width: 250px; height: 330px; }
+            .tier-1 { width: 240px; height: 72px; }
+            .tier-2 { width: 185px; height: 64px; bottom: 68px; }
+            .tier-3 { width: 140px; height: 56px; bottom: 128px; }
+            .candle-row { bottom: 172px; width: 100px; gap: 16px; }
+            .candle-body { height: 52px; width: 10px; }
+            .flame { width: 14px; height: 24px; top: -28px; }
+            .photo-frame.top-photo { width: 150px; height: 150px; }
+            .photo-frame.side-photo { width: 115px; height: 115px; }
+            .photo-bottom { gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="birthday-card">
+    <div class="cake-photo-row">
+        <div class="cake-section">
+            <div class="cake-wrapper">
+                <div class="cake">
+                    <div class="tier tier-1">
+                        <div class="sprinkle s1"></div>
+                        <div class="sprinkle s2"></div>
+                        <div class="sprinkle s3"></div>
+                        <div class="sprinkle s4"></div>
+                        <div class="sprinkle s8"></div>
+                    </div>
+                    <div class="tier tier-2">
+                        <div class="sprinkle s5"></div>
+                        <div class="sprinkle s6"></div>
+                        <div class="sprinkle s9"></div>
+                        <div class="sprinkle s10"></div>
+                    </div>
+                    <div class="tier tier-3">
+                        <div class="sprinkle s7"></div>
+                        <div class="sprinkle s2"></div>
+                        <div class="sprinkle s5"></div>
+                    </div>
+
+                    <!-- 3 thin candles centered on the top tier -->
+                    <div class="candle-row">
+                        <div class="candle-holder" data-candle="1">
+                            <div class="candle-glow"></div>
+                            <div class="candle-body">
+                                <div class="wick"></div>
+                                <div class="flame"></div>
+                            </div>
+                            <div class="smoke"></div>
+                        </div>
+                        <div class="candle-holder" data-candle="2">
+                            <div class="candle-glow"></div>
+                            <div class="candle-body">
+                                <div class="wick"></div>
+                                <div class="flame"></div>
+                            </div>
+                            <div class="smoke"></div>
+                        </div>
+                        <div class="candle-holder" data-candle="3">
+                            <div class="candle-glow"></div>
+                            <div class="candle-body">
+                                <div class="wick"></div>
+                                <div class="flame"></div>
+                            </div>
+                            <div class="smoke"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Curved photo layout: 1 on top, 2 below -->
+        <div class="photo-section">
+            <div class="photo-top">
+                <div class="photo-frame top-photo">
+                    <img src="images/Morlyimg.jpg" alt="Friend photo 1" class="friendPhoto">
+                </div>
+            </div>
+            <div class="photo-bottom">
+                <div class="photo-frame side-photo left-photo">
+                    <img src="images/sorsogoniamge.jpeg" alt="Friend photo 2" class="friendPhoto">
+                </div>
+                <div class="photo-frame side-photo right-photo">
+                    <img src="images/sorsuimg.jpeg" alt="Friend photo 3" class="friendPhoto">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="message-panel">
+        <div class="message-display" id="messageDisplay"></div>
+    </div>
+
+    <div class="hint">👆 Click any candle to blow it out — the song will play and confetti will pop!</div>
+</div>
+
+<script>
+    (function() {
+        const candles = document.querySelectorAll('.candle-holder');
+        const messageDisplay = document.getElementById('messageDisplay');
+        const friendPhotos = document.querySelectorAll('.friendPhoto');
+
+        /* ============================================================
+           TYPEWRITER MESSAGE
+           ============================================================ */
+        const MESSAGE_TEXT = "Happy Birthday, Morly! Mabuhay ka ng matagal SK namin HAHAHA, Wish you all the best in life. Don't forget to pray when life get's hard, may God always bless you. We love you  🎉";
+        let typeIndex = 0;
+        let typeTimer = null;
+
+        function startTyping() {
+            if (typeTimer) clearTimeout(typeTimer);
+            messageDisplay.innerHTML = "";
+            typeIndex = 0;
+
+            function typeNext() {
+                if (typeIndex < MESSAGE_TEXT.length) {
+                    const typed = MESSAGE_TEXT.slice(0, typeIndex + 1);
+                    messageDisplay.innerHTML = typed + '<span class="caret"></span>';
+                    typeIndex++;
+                    const ch = MESSAGE_TEXT[typeIndex - 1];
+                    let delay = 65;
+                    if (ch === ',' || ch === '!' || ch === '.') delay = 260;
+                    typeTimer = setTimeout(typeNext, delay);
+                } else {
+                    messageDisplay.innerHTML = MESSAGE_TEXT;
+                }
+            }
+            typeNext();
+        }
+
+        /* ============================================================
+           LIVE "HAPPY BIRTHDAY" SONG (Web Audio API)
+           ============================================================ */
+        const NOTES = {
+            'G3': 196.00, 'A3': 220.00, 'B3': 246.94,
+            'C4': 261.63, 'D4': 293.66, 'E4': 329.63, 'F4': 349.23,
+            'G4': 392.00, 'A4': 440.00, 'B4': 493.88,
+            'C5': 523.25, 'D5': 587.33, 'E5': 659.25, 'F5': 698.46, 'G5': 783.99
+        };
+
+        const MELODY = [
+            ['G4', 0.75], ['G4', 0.25], ['A4', 1], ['G4', 1], ['C5', 1], ['B4', 2],
+            ['G4', 0.75], ['G4', 0.25], ['A4', 1], ['G4', 1], ['D5', 1], ['C5', 2],
+            ['G4', 0.75], ['G4', 0.25], ['G5', 1], ['E5', 1], ['C5', 1], ['B4', 1], ['A4', 1.5],
+            ['F5', 0.75], ['F5', 0.25], ['E5', 1], ['C5', 1], ['D5', 1], ['C5', 2.5]
+        ];
+
+        let audioCtx = null;
+        let loopTimerId = null;
+        let isSongPlaying = false;
+        let playCount = 0;
+        const MAX_PLAYS = 2;
+        let queuedRestart = false;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            return audioCtx;
+        }
+
+        function playNote(freq, startTime, duration) {
+            const ctx = audioCtx;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, startTime);
+
+            const vibrato = ctx.createOscillator();
+            const vibratoGain = ctx.createGain();
+            vibrato.frequency.value = 5.2;
+            vibratoGain.gain.value = 3;
+            vibrato.connect(vibratoGain);
+            vibratoGain.connect(osc.frequency);
+            vibrato.start(startTime);
+            vibrato.stop(startTime + duration + 0.1);
+
+            gain.gain.setValueAtTime(0.0001, startTime);
+            gain.gain.exponentialRampToValueAtTime(0.22, startTime + 0.04);
+            gain.gain.exponentialRampToValueAtTime(0.15, startTime + 0.12);
+            gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(startTime);
+            osc.stop(startTime + duration + 0.05);
+        }
+
+        function playSongOnceAndLoop() {
+            if (!audioCtx) initAudio();
+
+            if (loopTimerId) {
+                clearTimeout(loopTimerId);
+                loopTimerId = null;
+            }
+
+            if (playCount >= MAX_PLAYS && !queuedRestart) {
+                isSongPlaying = false;
+                return;
+            }
+
+            if (queuedRestart) {
+                queuedRestart = false;
+                playCount = 0;
+            }
+
+            const ctx = audioCtx;
+            const now = ctx.currentTime + 0.08;
+            const beatDuration = 0.42;
+
+            let time = now;
+            MELODY.forEach(([noteName, beats]) => {
+                playNote(NOTES[noteName], time, beats * beatDuration * 0.92);
+                time += beats * beatDuration;
+            });
+
+            playCount++;
+            const songDurationMs = (time - now) * 1000;
+            isSongPlaying = true;
+
+            loopTimerId = setTimeout(() => {
+                isSongPlaying = false;
+                if (queuedRestart) {
+                    playSongOnceAndLoop();
+                } else if (playCount < MAX_PLAYS) {
+                    playSongOnceAndLoop();
+                }
+            }, songDurationMs + 250);
+        }
+
+        function requestSong() {
+            if (isSongPlaying) {
+                queuedRestart = true;
+            } else {
+                playCount = 0;
+                queuedRestart = false;
+                initAudio();
+                playSongOnceAndLoop();
+            }
+        }
+
+        /* ============================================================
+           CONFETTI
+           ============================================================ */
+        function fireConfetti() {
+            confetti({
+                particleCount: 180, spread: 85, origin: { y: 0.6 },
+                colors: ['#b57edc', '#e6b3ff', '#ffd966', '#ff9f4b', '#f9c9b2', '#ffffff', '#7ec8e3'],
+                startVelocity: 38, gravity: 0.8, drift: 0.4, ticks: 220
+            });
+            setTimeout(() => {
+                confetti({ particleCount: 90, spread: 130, origin: { x: 0.2, y: 0.5 },
+                    colors: ['#d9b3ff', '#ffb3ba', '#b5e6b5', '#ffffb5'] });
+                confetti({ particleCount: 90, spread: 130, origin: { x: 0.8, y: 0.5 },
+                    colors: ['#ffb3ba', '#b5d6ff', '#f9f9b5', '#e6b3ff'] });
+            }, 160);
+        }
+
+        /* ============================================================
+           CANDLE BLOW / RELIGHT (per candle)
+           ============================================================ */
+        function blowOutCandle(candleHolder) {
+            const flame = candleHolder.querySelector('.flame');
+            const glow = candleHolder.querySelector('.candle-glow');
+            const smoke = candleHolder.querySelector('.smoke');
+
+            const isOut = flame.classList.contains('out');
+
+            if (isOut) {
+                flame.classList.remove('out');
+                glow.classList.remove('out');
+                flame.style.animation = 'none';
+                void flame.offsetWidth;
+                flame.style.animation = 'flameFlicker 0.18s infinite alternate ease-in-out';
+            } else {
+                flame.classList.add('out');
+                glow.classList.add('out');
+
+                smoke.classList.remove('puff');
+                void smoke.offsetWidth;
+                smoke.classList.add('puff');
+
+                fireConfetti();
+                requestSong();
+            }
+        }
+
+        candles.forEach((candle) => {
+            candle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                blowOutCandle(candle);
+            });
+        });
+
+        /* ============================================================
+           PHOTO FALLBACK
+           ============================================================ */
+        friendPhotos.forEach((img) => {
+            img.addEventListener('error', function() {
+                this.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(`
+                    <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 100 100">
+                        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="#c9a0ff"/><stop offset="100%" stop-color="#9b6bb0"/>
+                        </linearGradient></defs>
+                        <rect width="100" height="100" fill="url(#g)"/>
+                        <circle cx="50" cy="42" r="18" fill="#ffd966"/>
+                        <circle cx="43" cy="38" r="4" fill="#3b1e5e"/>
+                        <circle cx="57" cy="38" r="4" fill="#3b1e5e"/>
+                        <path d="M38 54 Q50 68 62 54" stroke="#3b1e5e" stroke-width="3" fill="none" stroke-linecap="round"/>
+                        <text x="50" y="88" font-size="11" text-anchor="middle" fill="#fff7e6" font-family="Poppins, sans-serif" font-weight="700">Bestie 💜</text>
+                    </svg>
+                `);
+            });
+        });
+
+        /* ============================================================
+           BOOT
+           ============================================================ */
+        window.addEventListener('load', () => {
+            startTyping();
+        });
+    })();
+</script>
+</body>
+</html>
