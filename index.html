@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎂 Birthday Wishes for My Friend</title>
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Poppins', 'Arial', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #3b1e5e 0%, #6a2c8c 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .birthday-card {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border-radius: 60px 60px 40px 40px;
+            padding: 30px 30px 40px;
+            box-shadow: 0 30px 40px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 215, 255, 0.3);
+        }
+
+        /* Main layout: cake + photo side by side */
+        .cake-photo-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 30px 20px;
+            margin-bottom: 35px;
+        }
+
+        /* Cake container */
+        .cake-section {
+            flex: 1 1 280px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cake-wrapper {
+            position: relative;
+            cursor: default;
+            filter: drop-shadow(0 15px 15px rgba(0, 0, 0, 0.3));
+        }
+
+        .cake {
+            position: relative;
+            width: 260px;
+            height: 200px;
+        }
+
+        /* Cake base */
+        .cake-bottom {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 110px;
+            background: #f9c9b2;
+            background: linear-gradient(135deg, #fce2c1, #f7b78b);
+            border-radius: 30px 30px 25px 25px;
+            box-shadow: inset 0 -10px 0 #d49b6a, 0 10px 15px rgba(0, 0, 0, 0.2);
+            border: 3px solid #e1a77b;
+        }
+
+        /* Cream layer */
+        .cake-cream {
+            position: absolute;
+            bottom: 85px;
+            width: 100%;
+            height: 40px;
+            background: #fff2e0;
+            background: radial-gradient(circle at 20% 30%, #fff8ed, #ffe6cc);
+            border-radius: 30px 30px 15px 15px;
+            box-shadow: inset 0 5px 8px rgba(255, 255, 255, 0.8), 0 5px 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid #f0cfb0;
+            z-index: 2;
+        }
+
+        /* Frosting drips */
+        .drip {
+            position: absolute;
+            width: 18px;
+            height: 28px;
+            background: #ffe6cc;
+            border-radius: 0 0 15px 15px;
+            top: 0px;
+            box-shadow: inset -2px -3px 0 #f0cfb0;
+            border-left: 1px solid #f0cfb0;
+            border-right: 1px solid #f0cfb0;
+            border-bottom: 2px solid #e0b890;
+        }
+
+        .drip1 { left: 30px; }
+        .drip2 { left: 70px; height: 35px; width: 20px; }
+        .drip3 { left: 110px; height: 25px; }
+        .drip4 { left: 150px; height: 32px; width: 20px; }
+        .drip5 { left: 190px; height: 26px; }
+        .drip6 { left: 220px; width: 16px; }
+
+        /* Candle */
+        .candle {
+            position: absolute;
+            bottom: 125px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 26px;
+            height: 70px;
+            background: repeating-linear-gradient(45deg, #fbbf8c, #fbbf8c 8px, #fde3c0 8px, #fde3c0 16px);
+            border-radius: 10px 10px 5px 5px;
+            border: 2px solid #e09e5b;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            z-index: 10;
+        }
+
+        .candle:hover {
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 0 20px #ffb86b, 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .candle:active {
+            transform: translateX(-50%) scale(0.95);
+        }
+
+        /* Flame */
+        .flame {
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 22px;
+            height: 32px;
+            background: radial-gradient(circle at 50% 80%, #ffd966, #ff8c00 70%, #ff4d4d);
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 30px #ffb347, 0 0 60px #ff8c00;
+            transition: opacity 0.2s;
+            animation: flicker 0.4s infinite alternate;
+            opacity: 1;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1); opacity: 0.95; }
+            100% { transform: translateX(-50%) scale(1.1); opacity: 1; box-shadow: 0 0 40px #ffaa33, 0 0 70px #ff5500; }
+        }
+
+        .flame.out {
+            opacity: 0;
+            animation: none;
+            box-shadow: none;
+        }
+
+        /* Photo frame */
+        .photo-section {
+            flex: 1 1 260px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .photo-frame {
+            width: 240px;
+            height: 240px;
+            background: #f2e6ff;
+            border-radius: 40px 40px 40px 40px;
+            box-shadow: 0 18px 30px rgba(0, 0, 0, 0.4), 0 0 0 6px #bc9bd9, 0 0 0 12px #9b6bb0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-frame:hover {
+            transform: scale(1.02) rotate(1deg);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 34px;
+        }
+
+        /* Message panel (customizable) */
+        .message-panel {
+            background: rgba(255, 240, 255, 0.2);
+            backdrop-filter: blur(8px);
+            border-radius: 50px;
+            padding: 16px 20px;
+            margin: 10px 0 20px;
+            border: 2px solid #e2bbff;
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.2), 0 8px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .message-display {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #fff7e6;
+            text-shadow: 3px 3px 0 #3e1d5e, 0 0 20px #e6b3ff;
+            letter-spacing: 1px;
+            word-break: break-word;
+            min-height: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 0;
+            transition: color 0.2s;
+        }
+
+        /* Navigation / customize button */
+        .nav-button-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .customize-btn {
+            background: linear-gradient(145deg, #b57edc, #8a4fbb);
+            border: none;
+            color: white;
+            font-weight: 700;
+            font-size: 1.3rem;
+            padding: 18px 38px;
+            border-radius: 100px;
+            letter-spacing: 1.5px;
+            box-shadow: 0 10px 0 #4a235a, 0 15px 25px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid #dbb6ff;
+            text-shadow: 2px 2px 0 #4a235a;
+        }
+
+        .customize-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 13px 0 #4a235a, 0 20px 30px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(145deg, #c68fec, #9b5fcc);
+        }
+
+        .customize-btn:active {
+            transform: translateY(6px);
+            box-shadow: 0 4px 0 #4a235a, 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Modal / prompt styling (fallback to prompt, but we use window.prompt) */
+        /* We'll use native prompt for simplicity, but add a little style via custom? 
+           Actually we can make an elegant inline editor, but requirement says "navigation button where I can customize message". 
+           I'll use a prompt for simplicity and reliability, but to be fancier I'll add a hidden input? 
+           But we need to keep everything inside, and prompt is fine. I'll make it elegant with prompt.
+        */
+
+        /* Confetti canvas is fixed by library */
+
+        /* small responsive */
+        @media (max-width: 700px) {
+            .birthday-card {
+                padding: 20px 15px 30px;
+                border-radius: 40px;
+            }
+            .cake { width: 220px; height: 180px; }
+            .cake-bottom { height: 90px; }
+            .cake-cream { bottom: 70px; height: 35px; }
+            .candle { bottom: 110px; width: 22px; height: 60px; }
+            .flame { top: -20px; width: 18px; height: 28px; }
+            .message-display { font-size: 1.4rem; }
+            .customize-btn { font-size: 1.1rem; padding: 14px 28px; }
+            .photo-frame { width: 200px; height: 200px; }
+        }
+
+        @media (max-width: 480px) {
+            .cake-photo-row { flex-direction: column; }
+            .message-display { font-size: 1.2rem; }
+        }
+
+        /* Helper for blown state */
+        .blown .flame {
+            opacity: 0;
+            animation: none;
+        }
+        /* we'll manage with JS by adding .out class to flame */
+    </style>
+</head>
+<body>
+
+<div class="birthday-card">
+    <!-- Cake & Photo row -->
+    <div class="cake-photo-row">
+        <!-- Cake with clickable candle -->
+        <div class="cake-section">
+            <div class="cake-wrapper">
+                <div class="cake">
+                    <!-- Cake layers -->
+                    <div class="cake-bottom"></div>
+                    <div class="cake-cream"></div>
+                    <!-- Frosting drips -->
+                    <div class="drip drip1"></div>
+                    <div class="drip drip2"></div>
+                    <div class="drip drip3"></div>
+                    <div class="drip drip4"></div>
+                    <div class="drip drip5"></div>
+                    <div class="drip drip6"></div>
+                    <!-- Candle with flame -->
+                    <div class="candle" id="candle">
+                        <div class="flame" id="flame"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Photo beside cake -->
+        <div class="photo-section">
+            <div class="photo-frame">
+                <!-- Placeholder image: you can replace with your friend's photo -->
+                <img src="https://placecats.com/300/300?random=1" alt="Friend's photo" id="friendPhoto">
+            </div>
+        </div>
+    </div>
+
+    <!-- Customizable message panel -->
+    <div class="message-panel">
+        <div class="message-display" id="messageDisplay">
+            Happy Birthday, Bestie! 🎉
+        </div>
+    </div>
+
+    <!-- Navigation / customize button -->
+    <div class="nav-button-container">
+        <button class="customize-btn" id="customizeBtn">
+            ✏️ Customize Message
+        </button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // Elements
+        const candle = document.getElementById('candle');
+        const flame = document.getElementById('flame');
+        const messageDisplay = document.getElementById('messageDisplay');
+        const customizeBtn = document.getElementById('customizeBtn');
+
+        // Default message
+        let currentMessage = "Happy Birthday, Bestie! 🎉";
+
+        // Function to fire confetti
+        function fireConfetti() {
+            // Use canvas-confetti
+            confetti({
+                particleCount: 160,
+                spread: 80,
+                origin: { y: 0.6 },
+                colors: ['#b57edc', '#e6b3ff', '#ffd966', '#ff9f4b', '#f9c9b2', '#ffffff'],
+                startVelocity: 35,
+                gravity: 0.8,
+                drift: 0.5,
+                ticks: 200
+            });
+            // Also a second burst from left and right for more fun
+            setTimeout(() => {
+                confetti({
+                    particleCount: 80,
+                    spread: 120,
+                    origin: { x: 0.2, y: 0.5 },
+                    colors: ['#d9b3ff', '#ffb3ba', '#b5e6b5', '#ffffb5']
+                });
+                confetti({
+                    particleCount: 80,
+                    spread: 120,
+                    origin: { x: 0.8, y: 0.5 },
+                    colors: ['#ffb3ba', '#b5d6ff', '#f9f9b5', '#e6b3ff']
+                });
+            }, 150);
+        }
+
+        // Function to blow out candle
+        function blowOutCandle() {
+            // If flame is already out, we can re-light? 
+            // For the user experience we just blow it out and fire confetti
+            // For repeated clicks we want to re-light? The requirement: "blowing candle when the candle is clicked and a confetti pops"
+            // So if clicked multiple times, we can keep confetti but candle stays out. But let's allow re-light for more fun? 
+            // Actually better: each click toggles? No, "blowing candle" only once. But we can reset by clicking again? 
+            // I'll implement: if flame is visible -> blow out and fire confetti. If already out, we can re-light and then blow? 
+            // Simpler: keep blown out but still fire confetti (so user gets confetti every click). But that's weird if candle stays out.
+            // Let's make it: if flame is out, we re-light it (so they can blow again). That's more playful.
+            // But requirement says "when the candle is clicked, and a confetti pops" – the first time is the main. 
+            // But re-lighting makes it interactive. I'll go with: on click, if flame is out, re-light (no confetti), else blow out + confetti.
+            // But then they might not get confetti if they click again. Hmm. Better: always blow out and fire confetti, and if already out, just fire confetti.
+            // Let's check: we want confetti each time they click the candle. And candle goes out (or stays out). 
+            // So if it's already out, we still fire confetti. That's fine – blowing an already blown candle? But user might want to re-light.
+            // Let's add a small reset: a second click relights? I'll do the following: first click -> blow out + confetti. Next click -> re-light (no confetti). Next click -> blow out + confetti. So it's a toggle.
+            // But then the confetti only happens on blowing out. That matches "blowing candle ... confetti pops"
+            // And we re-light so they can do it again. Perfect.
+            
+            const isFlameOut = flame.classList.contains('out');
+            
+            if (isFlameOut) {
+                // Re-light
+                flame.classList.remove('out');
+                flame.style.animation = 'flicker 0.4s infinite alternate';
+                // Also change any state
+            } else {
+                // Blow out
+                flame.classList.add('out');
+                flame.style.animation = 'none';
+                // Fire confetti
+                fireConfetti();
+                // Also maybe play a small sound? Not necessary
+            }
+        }
+
+        // Add click listener on candle
+        candle.addEventListener('click', (e) => {
+            e.stopPropagation(); // avoid any weirdness
+            blowOutCandle();
+        });
+
+        // Customize message via prompt (simple and effective)
+        function customizeMessage() {
+            const newMessage = prompt("✨ Enter your birthday message for your friend:", currentMessage);
+            if (newMessage !== null && newMessage.trim() !== "") {
+                currentMessage = newMessage.trim();
+                messageDisplay.textContent = currentMessage;
+                // Also, let's give a little confetti to celebrate the message change? optional
+                // small burst?
+                confetti({
+                    particleCount: 40,
+                    spread: 50,
+                    origin: { y: 0.7 },
+                    colors: ['#b57edc', '#e6b3ff', '#ffd966']
+                });
+            } else if (newMessage !== null && newMessage.trim() === "") {
+                // If empty, maybe set to default? or keep? Let's keep original, or maybe set to a default?
+                // We'll do nothing, but maybe show a toast? Not needed.
+            }
+        }
+
+        customizeBtn.addEventListener('click', customizeMessage);
+
+        // Optional: Preload confetti library is loaded
+        // Also ensure that if the user clicks the candle quickly multiple times, confetti still works.
+        // Adjust the photo to be a nicer random image? No, keep user replaceable. 
+        // Could set a different placeholder image? It's fine.
+
+        // Extra: Add a subtle burst on page load to welcome? Not necessary but fun
+        window.addEventListener('load', () => {
+            // small confetti to set the mood, but not too much
+            setTimeout(() => {
+                confetti({
+                    particleCount: 60,
+                    spread: 60,
+                    origin: { y: 0.7 },
+                    colors: ['#b57edc', '#e6b3ff', '#c9a0ff']
+                });
+            }, 400);
+        });
+
+        // Also handle image fallback if the image fails to load
+        const friendPhoto = document.getElementById('friendPhoto');
+        friendPhoto.addEventListener('error', function() {
+            // If image fails, use a data-uri placeholder with a cute design
+            this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23c9a0ff"/><circle cx="50" cy="40" r="20" fill="%23ffd966"/><circle cx="40" cy="35" r="5" fill="%233b1e5e"/><circle cx="60" cy="35" r="5" fill="%233b1e5e"/><path d="M35 55 Q50 70 65 55" stroke="%233b1e5e" stroke-width="3" fill="none"/><text x="50" y="90" font-size="12" text-anchor="middle" fill="%233b1e5e" font-weight="bold">Bestie</text></svg>';
+        });
+
+        // Candle flame class: we use 'out' class for blown state
+        // Initially candle is lit. All good.
+    })();
+</script>
+
+<!-- ensure that flame keeps flickering class; we didn't set out initially -->
+</body>
+</html>
